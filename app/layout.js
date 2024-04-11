@@ -1,6 +1,11 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+import { ThemeProvider } from "@/lib/providers/ThemeProvider";
+import { SessionProvider } from "next-auth/react";
+import Sidebar from "@/components/sidebar/SideBar";
+import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -11,7 +16,21 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ReactQueryProvider>
+          <SessionProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Sidebar />
+              {children}
+            </ThemeProvider>
+          </SessionProvider>
+        </ReactQueryProvider>
+      </body>
     </html>
   );
 }
