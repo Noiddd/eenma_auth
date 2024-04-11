@@ -2,15 +2,11 @@ import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 import SignInForm from "@/components/signin/SignInForm";
-import useUserSession from "@/hooks/useUserSession";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 
 export default async function SignIn() {
   const session = await auth();
-  console.log(session);
-
-  //const { data } = await useUserSession();
 
   if (session?.user) {
     return redirect("/analytics");
